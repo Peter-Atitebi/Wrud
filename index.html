@@ -7,23 +7,157 @@
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>CRUD</title>
-    <link rel="stylesheet" href="" />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <h1>CRUD</h1>
 
+    <div>
       <input type="email" placeholder="Email" id="email" />
+    </div>
+    <div>
       <input type="password" placeholder="Password" id="password" />
-      <input type="name" placeholder="Username" id="username" />
-      <input type="text" placeholder="Favorite Food" id="favourite_food" />
+    </div>
 
+    <div>
+      <input type="name" placeholder="Username" id="username" />
+    </div>
+
+    <div>
+      <input type="text" placeholder="Favorite Food" id="favourite_food" />
+    </div>
+
+    <br />
+
+    <div>
       <button id="CrtBtn" type="submit">CREATE</button>
       <button id="RetBtn" type="submit">RETRIEVE</button>
       <button id="UpdBtn" type="submit">UPDATE</button>
       <button id="DelBtn" type="submit">DELETE</button>
+    </div>
 
+    <div id="dd"></div>
 
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        child,
+        get,
+        set,
+        update,
+        remove,
+      } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
 
-    <script src="index.js"></script>
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyA0OQ4Uera27uMO8YB95HYf2roCOMrUJQs",
+        authDomain: "crud-ee07e.firebaseapp.com",
+        databaseURL: "https://crud-ee07e-default-rtdb.firebaseio.com",
+        projectId: "crud-ee07e",
+        storageBucket: "crud-ee07e.appspot.com",
+        messagingSenderId: "666520724549",
+        appId: "1:666520724549:web:180e060f310e92d4552f2c",
+        measurementId: "G-0FD9SHENS1",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase();
+
+      let favouriteFood = document.getElementById("favourite_food");
+      let Username = document.getElementById("username");
+      let Password = document.getElementById("password");
+      let Email = document.getElementById("email");
+      let DD = document.getElementById("dd");
+
+      let All = [];
+
+      let CrtBtn = document.getElementById("CrtBtn");
+      let RetBtn = document.getElementById("RetBtn");
+      let UpdBtn = document.getElementById("UpdBtn");
+      let DelBtn = document.getElementById("DelBtn");
+
+      function AddData() {
+        set(ref(db, `User/` + Username.value), {
+          email: Email.value,
+          password: Password.value,
+          username: Username.value,
+          favouriteFood: favouriteFood.value,
+        })
+          .then(() => {
+            alert("Successfully added data");
+          })
+          .catch((error) => {
+            alert("Unsuccessful");
+            console.log(error);
+          });
+
+        All.push(`<div> {
+          Email: ${Email.value},
+          Password: ${Password.value},
+          Username: ${Username.value},
+          Favourite_Food: ${favouriteFood.value},
+        }</div>`);
+
+        DD.innerHTML = All;
+      }
+
+      function RetData() {
+        const dbRef = ref(db);
+
+        get(child(dbRef, `User/` + Username.value))
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              Email.value = snapshot.val().email;
+              Password.value = snapshot.val().password;
+              Username.value = snapshot.val().username;
+              favouriteFood.value = snapshot.val().favouriteFood;
+            } else {
+              alert("NULL");
+            }
+          })
+          .catch((error) => {
+            alert("Unsuccessful");
+            console.log(error);
+          });
+      }
+
+      function UpdData() {
+        update(ref(db, `User/` + Username.value), {
+          email: Email.value,
+          password: Password.value,
+          favouriteFood: favouriteFood.value,
+        })
+          .then(() => {
+            alert("Successfully updated data");
+          })
+          .catch((error) => {
+            alert("Unsuccessful");
+            console.log(error);
+          });
+      }
+
+      function DelData() {
+        remove(ref(db, `User/` + Username.value))
+          .then(() => {
+            alert("Successfully deleted data");
+          })
+          .catch((error) => {
+            alert("Unsuccessful");
+            console.log(error);
+          });
+      }
+
+      CrtBtn.addEventListener("click", AddData);
+      RetBtn.addEventListener("click", RetData);
+      UpdBtn.addEventListener("click", UpdData);
+      DelBtn.addEventListener("click", DelData);
+    </script>
   </body>
 </html>
