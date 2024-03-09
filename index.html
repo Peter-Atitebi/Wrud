@@ -11,32 +11,19 @@
   </head>
   <body>
     <h1>CRUD</h1>
-    <form class="max-w-sm mx-auto" id="formm">
-      <div class="mb-5">
-        <label
-          for="email"
-          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Full Name?</label
-        >
-        <input
-          type="text"
-          id="email"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder=" Enter Name Here"
-        />
-      </div>
 
-      <button
-        type="submit"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-      >
-        Add
-      </button>
-    </form>
+      <input type="email" placeholder="Email" id="email" />
+      <input type="password" placeholder="Password" id="password" />
+      <input type="name" placeholder="Username" id="username" />
+      <input type="text" placeholder="Favorite Food" id="favourite_food" />
 
-    <div id="accounts">
-      ...
-    </div>
+      <button id="CrtBtn" type="submit">CREATE</button>
+      <button id="RetBtn" type="submit">RETRIEVE</button>
+      <button id="UpdBtn" type="submit">UPDATE</button>
+      <button id="DelBtn" type="submit">DELETE</button>
+
+
+
     <script src="index.js"></script>
   </body>
 </html>
